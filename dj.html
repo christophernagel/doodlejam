@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DJ Platform Proof of Concept</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #1e1e1e;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      .dj-console {
+        background-color: #2a2a2a;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: grid;
+        grid-template-columns: 3fr 1fr;
+        grid-template-rows: 1fr auto;
+        gap: 15px;
+        width: 800px;
+        height: 800px;
+      }
+      .disk-area {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      .controls {
+        grid-column: 2;
+        grid-row: 1 / 3;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .buttons {
+        grid-column: 1;
+        grid-row: 2;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .crossfader {
+        grid-column: 2;
+        grid-row: 2;
+      }
+      .control {
+        background-color: #3a3a3a;
+        padding: 10px;
+        border-radius: 5px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .disk {
+        aspect-ratio: 1;
+        background-color: #4a4a4a;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .knob {
+        width: 40px;
+        height: 40px;
+        background-color: #5a5a5a;
+        border-radius: 50%;
+        position: relative;
+        cursor: grab;
+      }
+      .knob.active {
+        cursor: grabbing;
+      }
+      .knob::after {
+        content: "";
+        position: absolute;
+        top: 5px;
+        left: 50%;
+        width: 2px;
+        height: 15px;
+        background-color: #fff;
+        transform-origin: bottom;
+      }
+
+      .knob::before {
+        content: "";
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: #4caf50;
+        border-radius: 50%;
+        opacity: 0;
+        transition: opacity 0.2s, transform 0.2s;
+        pointer-events: none;
+      }
+
+      .knob:hover::before {
+        opacity: 1;
+      }
+
+      .knob.active::before {
+        transform: scale(0.6);
+      }
+      input[type="range"] {
+        width: 100%;
+        -webkit-appearance: none;
+        background: #3a3a3a;
+        outline: none;
+        opacity: 0.7;
+        transition: opacity 0.2s;
+      }
+      input[type="range"]:hover {
+        opacity: 1;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 15px;
+        height: 15px;
+        background: #4caf50;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+      input[type="range"]::-moz-range-thumb {
+        width: 15px;
+        height: 15px;
+        background: #4caf50;
+        cursor: pointer;
+        border-radius: 50%;
+      }
+      button {
+        width: 100%;
+        padding: 15px;
+        background-color: #4a4a4a;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+      button:hover {
+        background-color: #5a5a5a;
+      }
+      #volume {
+        height: 100px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="dj-console">
+      <div class="disk-area">
+        <div class="disk" id="disk">Disk</div>
+      </div>
+      <div class="controls">
+        <div class="control">
+          <label for="master-volume">Master Volume</label>
+          <div class="knob" id="master-volume"></div>
+        </div>
+        <div class="control">
+          <label for="trim">Trim</label>
+          <div class="knob" id="trim"></div>
+        </div>
+        <div class="control">
+          <label for="highs">Highs</label>
+          <div class="knob" id="highs"></div>
+        </div>
+        <div class="control">
+          <label for="mids">Mids</label>
+          <div class="knob" id="mids"></div>
+        </div>
+        <div class="control">
+          <label for="lows">Lows</label>
+          <div class="knob" id="lows"></div>
+        </div>
+        <div class="control">
+          <label for="filter">Low/High Pass</label>
+          <div class="knob" id="filter"></div>
+        </div>
+        <div class="control">
+          <label for="volume">Volume</label>
+          <input
+            type="range"
+            id="volume"
+            min="0"
+            max="100"
+            value="50"
+            orient="vertical"
+          />
+        </div>
+      </div>
+      <div class="buttons">
+        <button id="start-stop">Start/Stop</button>
+        <button id="cue">Cue</button>
+        <button id="sync">Sync</button>
+        <button id="soundboard">Soundboard Pad</button>
+      </div>
+      <div class="crossfader control">
+        <label for="crossfade">Crossfade</label>
+        <input type="range" id="crossfade" min="0" max="100" value="50" />
+      </div>
+    </div>
+
+    <script>
+      // Placeholder for JavaScript functionality
+      document
+        .querySelectorAll('input[type="range"], button, .knob')
+        .forEach((element) => {
+          element.addEventListener("mousedown", (e) =>
+            console.log(`${e.target.id} interaction started`)
+          );
+          element.addEventListener("mouseup", (e) =>
+            console.log(`${e.target.id} interaction ended`)
+          );
+        });
+
+      // Disk rotation simulation
+      let rotation = 0;
+      setInterval(() => {
+        rotation += 5;
+        document.getElementById(
+          "disk"
+        ).style.transform = `rotate(${rotation}deg)`;
+      }, 50);
+
+      // Knob rotation
+      document.querySelectorAll(".knob").forEach((knob) => {
+        let rotating = false;
+        let startAngle, currentAngle;
+        let rotationAngle = 0;
+
+        knob.addEventListener("mousedown", startRotating);
+        document.addEventListener("mousemove", rotate);
+        document.addEventListener("mouseup", stopRotating);
+        knob.addEventListener("mousemove", updateDotPosition);
+        knob.addEventListener("mouseleave", hideDot);
+
+        function startRotating(e) {
+          rotating = true;
+          knob.classList.add("active");
+          startAngle = Math.atan2(
+            e.clientY -
+              knob.getBoundingClientRect().top -
+              knob.offsetHeight / 2,
+            e.clientX - knob.getBoundingClientRect().left - knob.offsetWidth / 2
+          );
+          updateDotPosition(e);
+        }
+
+        function rotate(e) {
+          if (!rotating) return;
+          currentAngle = Math.atan2(
+            e.clientY -
+              knob.getBoundingClientRect().top -
+              knob.offsetHeight / 2,
+            e.clientX - knob.getBoundingClientRect().left - knob.offsetWidth / 2
+          );
+          rotationAngle += currentAngle - startAngle;
+          knob.style.transform = `rotate(${rotationAngle}rad)`;
+          startAngle = currentAngle;
+          updateDotPosition(e);
+        }
+
+        function stopRotating() {
+          rotating = false;
+          knob.classList.remove("active");
+        }
+
+        function updateDotPosition(e) {
+          const rect = knob.getBoundingClientRect();
+          const x = e.clientX - rect.left - 5; // 5px offset for dot radius
+          const y = e.clientY - rect.top - 5;
+          knob.style.setProperty("--dot-x", `${x}px`);
+          knob.style.setProperty("--dot-y", `${y}px`);
+        }
+
+        function hideDot() {
+          if (!rotating) {
+            knob.style.setProperty("--dot-x", "50%");
+            knob.style.setProperty("--dot-y", "50%");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

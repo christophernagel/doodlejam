@@ -1,0 +1,66 @@
+#User Interface:
+Design a skeuomorphic turntable interface with a hand-drawn, doodle-like aesthetic.
+Include two main turntables, mixer controls, and effect buttons.
+Use a sketchy font and hand-drawn icons to maintain the rough, playful style.
+
+#Core Functionality:
+Implement basic DJ controls: play/pause, crossfader, EQ (bass, mid, treble), and pitch control.
+Allow users to load tracks onto each turntable (maybe from local files or a predefined list).
+Implement a basic beat-matching system to help sync tracks.
+
+#Effects and Extras:
+Add fun, cartoon-style visual effects that react to the music (e.g., bouncing notes, vibrating speakers).
+Include some quirky sound effects or samples that users can trigger (like old-school toy sounds).
+Implement a simple loop/sampling feature for added creativity.
+
+#Paper Mario-inspired Elements:
+Create animated backgrounds that change based on the music's mood or tempo.
+Add character reactions or animations that respond to user actions (e.g., a little DJ character that bobs its head).
+
+#Accessibility and Ease of Use:
+Make controls intuitive and large, keeping with the toy-like theme.
+Include tooltips or a quick tutorial to help new users get started.
+
+#Technical Implementation:
+Use the Web Audio API for sound processing and manipulation.
+Implement the visuals using HTML5 Canvas or SVG for the hand-drawn style.
+Ensure it's responsive and works well on both desktop and mobile devices.
+
+#Additional Fun Features:
+"Sticker" system to decorate the DJ setup.
+Achievements or challenges to encourage exploration of features.
+Maybe a simple rhythm game mode to practice timing and beat-matching.
+
+
+##Controls
+
+Control Navigation:
+WASD for left turntable/controls
+Arrow keys for right turntable/controls This is an excellent way to quickly move between different controls without relying solely on mouse movement.
+
+Control Manipulation: Using the trackpad or mouse for actual control manipulation is a good approach. However, standard trackpads typically don't recognize rotation gestures natively. They usually detect:
+Single finger movement (cursor)
+Two-finger scrolling
+Pinch to zoom
+Some more advanced trackpads (like Apple's Force Touch) can detect more complex gestures, but it's not universal.
+
+Alternative Control Ideas:
+For rotation (like on turntables), you could use horizontal trackpad movement to simulate rotation. Left-to-right for clockwise, right-to-left for counterclockwise.
+Use two-finger vertical scrolling for pitch control or volume faders.
+Single clicks for buttons (play/pause, effects triggers)
+Right-click or two-finger tap for secondary functions
+
+Keyboard Alternatives:
+For precise control, you could use number keys (0-9) to set exact values for things like volume or EQ.
+Use Q/E for left turntable rotation and U/O for right turntable rotation.
+Spacebar could be used for play/pause of the active deck.
+
+Visual Feedback:
+Highlight the currently selected control to show where the user's focus is.
+Provide visual cues for which keys control which elements.
+
+Customization:
+Allow users to customize key bindings for more experienced users or those with different preferences.
+
+Mobile Consideration:
+For touch devices, you could implement swipe gestures and multi-touch controls that mimic the desktop keyboard shortcuts.
